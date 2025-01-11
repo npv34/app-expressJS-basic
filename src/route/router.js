@@ -5,11 +5,11 @@ const BookController = require('../controller/BookController');
 const router = express.Router();
 router.get('/home', (req, res) => {
     HomeController.showHomePage(req, res);
-})
+});
 
 router.get('/login', (req, res) => {
     AuthController.showFormLogin(req, res);
-})
+});
 
 router.post('/login', (req, res) => {
     AuthController.login(req, res);
@@ -17,10 +17,17 @@ router.post('/login', (req, res) => {
 
 router.get('/admin/books', (req, res) => {
     BookController.showListBook(req, res);
-})
+});
 
 router.get('/admin/books/:id/delete', (req, res) => {
     BookController.deleteBook(req, res);
 });
 
+router.get('/admin/books/create', (req, res) => {
+    BookController.showFormCreate(req, res);
+})
+
+router.post('/admin/books/store', (req, res) => {
+    BookController.storeBook(req, res);
+});
 module.exports = router;

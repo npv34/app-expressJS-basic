@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../layout/head.ejs', {pageTitle: 'Them moi sach'}) %>
+<body>
+    <div class="container">
+        <%- include('../layout/navbar.ejs') %>
+        <div class="card mt-2">
+            <div class="card-header">
+                <h1>Add new book</h1>
+            </div>
+            <div class="card-body">
+                <form action="/admin/books/store" method="post">
+                    <div class="mb-3">
+                        <label for="book_name" class="form-label">Book name</label>
+                        <input type="text" name="name" class="form-control" id="book_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" name="price" class="form-control" id="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Publishsher</label>
+                        <select name="id_publisher" class="form-control">
+                            <% listPublisher.forEach(item => { %>
+                            <option value="<%= item.id_publisher %>"><%= item.name %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Author</label>
+                        <select name="id_author" class="form-control">
+                            <% listAuthors.forEach(item => { %>
+                                <option value="<%= item.id_author %>"><%= item.name %></option>
+                                <% }) %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Image</label>
+                        <input name="image" type="file" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Publish Year</label>
+                        <select name="publish_year" class="form-control">
+                            <option>2025</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Amount</label>
+                        <input type="number"name="amount" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Categories</label>
+                        <div class=" row">
+                            <% categories.forEach(category => { %>
+                        
+                                <div class="form-check col-md-3">
+                                    <input class="form-check-input" name="category" type="checkbox" value="<%= category.id_cate %>" id="category-<%= category.id_cate %>">
+                                    <label class="form-check-label" for="category-<%= category.id_cate %>">
+                                       <%= category.name %>
+                                    </label>
+                                </div>
+                            <% }) %>
+                           
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/admin/books" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

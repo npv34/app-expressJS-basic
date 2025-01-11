@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<%- include('../layout/head.ejs', {pageTitle: 'Quan ly sach'}) %>
 <body>
-    <h1>Book list</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Author</th>
-            <th></th>
-        </tr>
-        <% data.forEach(item => { %>
-            <tr>
-                <td>1</td>
-                <td><%= item.name %></td>
-                <td><%= item.price %></td>
-                <td>Author 1</td>
-                <td><a href="/admin/books/<%= item.id_book %>/delete">Delete</a></td>
-            </tr> 
-        <% }) %>
-    </table>
+    <div class="container">
+        <%- include('../layout/navbar.ejs') %>
+        <div class="card mt-2">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h1 class="p-0">Book List</h1>
+                <a href="/admin/books/create" class="btn btn-success">Add new</a>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Author</th>
+                        <th></th>
+                    </tr>
+                    <% data.forEach((item, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= item.book_name %></td>
+                            <td><%= item.price %></td>
+                            <td><%= item.author_name %></td>
+                            <td><a class="btn btn-danger" href="/admin/books/<%= item.id_book %>/delete">Delete</a></td>
+                        </tr> 
+                    <% }) %>
+                </table>
+             </div>
+        </div>
+    </div>
+   
 </body>
 </html>
