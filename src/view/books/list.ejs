@@ -26,7 +26,11 @@
                             <td><img src="/images/<%= item.image %>" alt="<%= item.image %>" width="100"></td>
                             <td><%= item.price %></td>
                             <td><%= item.author_name %></td>
-                            <td><a class="btn btn-danger" href="/admin/books/<%= item.id_book %>/delete">Delete</a></td>
+                            <td>
+                                <a class="btn btn-danger" href="/admin/books/<%= item.id_book %>/delete">Delete</a>
+                                <a class="btn btn-primary" href="/admin/books/<%= item.id_book %>/edit">Edit</a>
+
+                            </td>
                         </tr> 
                     <% }) %>
                 </table>

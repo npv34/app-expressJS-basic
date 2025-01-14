@@ -52,6 +52,20 @@ class BookModel {
         const [results] = await (await this.connection).query(sql, [idBook]);
         return results[0];
     }
+
+    async getCategoriesOfBookById(idBook) {
+        const sql = 'SELECT * FROM category_book WHERE id_book =?';
+        const [results] = await (await this.connection).query(sql, [idBook]);
+        return results;
+    }
+
+    async updateBook(data, idBook) {
+        const sql = 'UPDATE books SET name = ?, id_publisher = ?, id_author = ?, price =? , image = ?, publish_year =?, amount = ? WHERE id_book = ?';
+        const {name, id_publisher, id_author, price, image, publish_year, amount} = data
+        return await (await this.connection).query(sql, [name, id_publisher, id_author, price, image, publish_year, amount, idBook]);
+    }
+
+
 }
 
 module.exports = new BookModel();

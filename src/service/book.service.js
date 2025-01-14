@@ -1,10 +1,15 @@
-const BookModel = require('./../model/book.model')
 const fs = require('fs');
+
+const BookModel = require('./../model/book.model')
+const CategoryModel = require('./../model/category.model')
+
 class BookService {
     bookModel;
+    categoryModel;
 
     constructor() {
         this.bookModel = BookModel;
+        this.categoryModel = CategoryModel;
     }
     
     async getBooks() {
@@ -61,9 +66,47 @@ class BookService {
     }
 
     async insertCategoryBook(idBookInsert, listCategory) {
-        listCategory.forEach(element => {
-            this.bookModel.insertCategoryBook(idBookInsert, element)
-        });
+        if(listCategory.length > 0) {
+            listCategory.forEach(element => {
+                this.bookModel.insertCategoryBook(idBookInsert, element)
+            });
+         }
+    }
+
+    async findBookById(idBook){
+        return await this.bookModel.findBookById(idBook);
+    }
+
+    async getCategoryOfBook(idBook) {
+        const list =  await this.bookModel.getCategoriesOfBookById(idBook);
+        console.log(list);
+        return list
+    }
+
+    async updateBook(req, res) {
+        const {id} = req.params;
+        const bookUpdate = await this.findBookById(id);
+        const data = req.body;
+        // xoa dc anh cu
+        if(req.file) {
+            const image = req.file;
+            const nameFile = image.filename;
+            data.image = nameFile;
+            const pathImageBook = "public/images/" + bookUpdate.image;
+            await this.unlinkFile(pathImageBook);
+        }
+        
+        // thu hien update book
+        await this.bookModel.updateBook(data, id)
+        // thuc hien update categories
+        // b1: Delete categories cu cua book theo book_id
+        await this.categoryModel.deleteCategoryByBookId(id);
+        // b2: Insert new category
+        let listCategory = req.body.category;
+        if( typeof listCategory == "string") {
+            listCategory = [listCategory]
+        }
+        this.insertCategoryBook(id, listCategory);
     }
 
 }

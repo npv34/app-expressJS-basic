@@ -51,4 +51,12 @@ router.get('/admin/books/create', (req, res) => {
 router.post('/admin/books/store', upload.single('image'), (req, res) => {
     BookController.storeBook(req, res);
 });
+
+router.get('/admin/books/:id/edit', (req, res) => {
+    BookController.showFomrEditBook(req, res);
+});
+
+router.post('/admin/books/:id/edit',upload.single('image'), (req, res) => {
+    BookController.editBook(req, res);
+});
 module.exports = router;

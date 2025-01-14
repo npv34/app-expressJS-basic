@@ -35,6 +35,30 @@ class BookController {
         await this.bookService.createBook(req)
         res.redirect('/admin/books');
     }
+
+    async showFomrEditBook(req, res) {
+        const publishers = await this.bookService.getPublishers();
+        const authors = await this.bookService.getAuthor(); 
+        const categories = await this.categoryService.getCategories();  
+        const {id} = req.params;
+        const bookUpdate = await this.bookService.findBookById(id)
+        const listCategoryOfBook = await this.bookService.getCategoryOfBook(id);
+        const listIdCategory = []
+        listCategoryOfBook.forEach(item => {
+                listIdCategory.push(item.id_cate)
+        })
+        res.render('books/edit.ejs', { listPublisher: publishers,
+             listAuthors: authors, 
+             categories: categories,
+             bookUpdate: bookUpdate,
+             listIdCategory: listIdCategory
+             });
+    }
+
+    async editBook(req, res) {
+       await this.bookService.updateBook(req, res);
+       res.redirect('/admin/books');
+    }
 }
 
 module.exports = new BookController();
