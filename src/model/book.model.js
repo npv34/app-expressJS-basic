@@ -8,7 +8,7 @@ class BookModel {
 
     async getAllBooks() {
         const sql = `
-        SELECT b.id_book, b.name as 'book_name', b.price, au.name as 'author_name'
+        SELECT b.id_book, b.name as 'book_name', b.price, b.image, au.name as 'author_name'
         FROM books b
         JOIN author au
         ON b.id_author = au.id_author`;
@@ -45,6 +45,12 @@ class BookModel {
     async insertCategoryBook(idBookInsert, idCategory) {
         const sql = 'INSERT INTO category_book (id_book, id_cate) VALUES (?,?)';
         await (await this.connection).query(sql, [idBookInsert, idCategory]);
+    }
+
+    async findBookById(idBook){
+        const sql = 'SELECT * FROM books WHERE id_book =?';
+        const [results] = await (await this.connection).query(sql, [idBook]);
+        return results[0];
     }
 }
 

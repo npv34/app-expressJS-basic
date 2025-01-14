@@ -14,6 +14,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Image</th>
                         <th>Price</th>
                         <th>Author</th>
                         <th></th>
@@ -22,6 +23,7 @@
                         <tr>
                             <td><%= index + 1 %></td>
                             <td><%= item.book_name %></td>
+                            <td><img src="/images/<%= item.image %>" alt="<%= item.image %>" width="100"></td>
                             <td><%= item.price %></td>
                             <td><%= item.author_name %></td>
                             <td><a class="btn btn-danger" href="/admin/books/<%= item.id_book %>/delete">Delete</a></td>

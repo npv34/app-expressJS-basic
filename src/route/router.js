@@ -1,8 +1,29 @@
 const express = require('express');
+const multer  = require('multer')
 const HomeController = require('../controller/HomeController');
 const AuthController = require('../controller/AuthController');
 const BookController = require('../controller/BookController');
 const router = express.Router();
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'public/images/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname);
+    },
+});
+
+const upload = multer({ 
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+          cb(null, true);
+        } else {
+          cb(new Error('Invalid file type'));
+        }
+      },
+ });
+
 router.get('/home', (req, res) => {
     HomeController.showHomePage(req, res);
 });
@@ -27,7 +48,7 @@ router.get('/admin/books/create', (req, res) => {
     BookController.showFormCreate(req, res);
 })
 
-router.post('/admin/books/store', (req, res) => {
+router.post('/admin/books/store', upload.single('image'), (req, res) => {
     BookController.storeBook(req, res);
 });
 module.exports = router;

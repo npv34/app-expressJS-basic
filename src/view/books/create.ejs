@@ -9,7 +9,7 @@
                 <h1>Add new book</h1>
             </div>
             <div class="card-body">
-                <form action="/admin/books/store" method="post">
+                <form action="/admin/books/store" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="book_name" class="form-label">Book name</label>
                         <input type="text" name="name" class="form-control" id="book_name" required>
@@ -35,17 +35,17 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="price" class="form-label">Image</label>
+                        <label for="image" class="form-label">Image</label>
                         <input name="image" type="file" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="price" class="form-label">Publish Year</label>
+                        <label for="year" class="form-label">Publish Year</label>
                         <select name="publish_year" class="form-control">
                             <option>2025</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="price" class="form-label">Amount</label>
+                        <label for="amount" class="form-label">Amount</label>
                         <input type="number"name="amount" class="form-control">
                     </div>
 
